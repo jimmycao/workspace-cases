@@ -1,0 +1,97 @@
+#!/bin/bash
+
+function print_usage(){
+  echo "Usage: puser COMMAND"
+  echo "       where COMMAND is one of:"
+  echo "  postblog 	            post a  blog" 
+  echo 
+  echo "  -V, --version         print the version"
+  echo "  -h, --help            print the help"
+}
+
+if [ $# = 0 ]; then
+  print_usage
+  exit 0
+fi
+
+COMMAND=$1
+case $COMMAND in
+  # usage flags
+  -h|-help|--help)
+    print_usage
+    exit 0
+	;;
+
+  # version info   
+   -v|-verbose|--verbose)
+   	echo "be verbose"
+   	exit 0 	
+	;;
+
+  # version info   
+   -V|-version|--version)
+   	echo "pandora-0.0.1"
+   	exit 0
+	;;
+    
+  #core commands
+  *)
+  	if [ "$COMMAND" = "postblog" ] ; then
+  	  echo -n "input your name:"
+  	  read name
+  	  echo "name=$name"
+  	  echo "input your blog:"
+  	  read blog
+  	  curr_time=$(date "+%Y-%m-%d-%H%M%S")
+  	  echo $blog > "/tmp/${curr_time}"
+      CLASS="com.pivotal.pandora.user.PostBlog $name /tmp/${curr_time}"  
+    else
+	  echo -e "\nError: wrong command, please refer to usage\n"
+      print_usage
+  	  exit 0	
+    fi
+	;;
+esac    
+
+shift 
+#PARAMS=$@
+
+
+# attempt to find java
+if [ -z "$JAVA_HOME" ]; then
+  for candidate in \
+    /usr/lib/jvm/java-6-sun \
+    /usr/lib/jvm/java-1.6.0-sun-1.6.0.*/jre/ \
+    /usr/lib/jvm/java-1.6.0-sun-1.6.0.* \
+    /usr/lib/jvm/j2sdk1.6-oracle \
+    /usr/lib/jvm/j2sdk1.6-oracle/jre \
+    /usr/lib/j2sdk1.6-sun \
+    /usr/java/jdk1.6* \
+    /usr/java/jre1.6* \
+    /Library/Java/Home \
+    /usr/java/default \
+    /usr/lib/jvm/default-java \
+    /usr/lib/jvm/java-openjdk \
+    /usr/lib/jvm/jre-openjdk \
+    /usr/lib/jvm/java-1.7.0-openjdk* \
+    /usr/lib/jvm/java-7-openjdk* \
+    /usr/lib/jvm/java-7-oracle* \
+    /usr/lib/jvm/java-1.6.0-openjdk \
+    /usr/lib/jvm/java-1.6.0-openjdk-* \
+    /usr/lib/jvm/jre-1.6.0-openjdk* ; do
+    if [ -e $candidate/bin/java ]; then
+      export JAVA_HOME=$candidate
+      break
+    fi
+  done
+fi
+
+PANDORA_HOME=$(dirname $(cd "$(dirname "$0")"; pwd))
+
+if [ -f /etc/default/hadoop ]; then
+    . /etc/default/hadoop
+fi
+
+CLASSPATH=$HADOOP_CONF_DIR:$YARN_CONF_DIR:$HDFS_CONF_DIR:$PANDORA_HOME/lib/pandora/*:$PANDORA_HOME/lib/pandora/lib/*:$PANDORA_HOME/conf:$CLASSPATH
+
+java $JAVA_OPTS -cp $CLASSPATH $CLASS 

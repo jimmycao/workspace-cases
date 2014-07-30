@@ -1,0 +1,12 @@
+target/
+.classpath
+.project
+.settings/
+conf/core-site.xml
+conf/hdfs-site.xml
+conf/mapred-site.xml
+conf/yarn-site.xml
+*.o
+plda/infer
+plda/lda
+plda/mpi_lda
