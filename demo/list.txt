@@ -1,0 +1,8 @@
+/Users/caoj7/data/training_doc_set/comp.os.ms-windows.misc/0002005
+/Users/caoj7/data/training_doc_set/comp.os.ms-windows.misc/0002006
+/Users/caoj7/data/training_doc_set/comp.os.ms-windows.misc/0002007
+/Users/caoj7/data/training_doc_set/comp.os.ms-windows.misc/0005736
+/Users/caoj7/data/training_doc_set/rec.sport.baseball/0009001
+/Users/caoj7/data/training_doc_set/rec.sport.baseball/0009002
+/Users/caoj7/data/training_doc_set/rec.sport.baseball/0009003
+/Users/caoj7/data/training_doc_set/rec.sport.baseball/0009004
