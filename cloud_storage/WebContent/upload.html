@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>My form</title>
+<script type="text/javascript">
+	var displayDiv = false;
+	function viewFileUpload() {
+		var divElement = document.getElementById("imageblock");
+		var plus = document.getElementById("plus");
+		var minus = document.getElementById("minus");
+
+		if (displayDiv) {
+			divElement.style.display = "block";
+			plus.style.display = "none";
+			minus.style.display = "block";
+			displayDiv = false;
+		} else {
+			divElement.style.display = "none";
+			plus.style.display = "block";
+			minus.style.display = "none";
+			displayDiv = true;
+		}
+	}
+	function makeInvisibleDiv() {
+		var divElement = document.getElementById("imageblock");
+		var imageElement = document.getElementById("minus");
+		divElement.style.display = "none";
+		imageElement.style.display = "none";
+		displayDiv = true;
+	}
+</script>
+</head>
+<body onLoad="makeInvisibleDiv()">
+	<center>
+		<form action="upload" method="post"
+			enctype="multipart/form-data">
+			<table>
+				<tr>
+					<td><input type="file" name="image" id="image" /></td>
+					<td><img src="./img/plus.png" id="plus" width="30" height="30"
+						onclick="viewFileUpload();"> <img src="./img/minus.png"
+						id="minus" width="25" height="25" onclick="viewFileUpload();">
+					</td>
+				</tr>
+			</table>
+			<div id="imageblock">
+				<input type="file" name="image1" id="image1" /><br /> <input
+					type="file" name="image2" id="image2" /><br /> <input type="file"
+					name="image3" id="image3" /><br /> <input type="file"
+					name="image4" id="image4" />
+			</div>
+			<input type="submit" value="Add" />
+		</form>
+	</center>
+</body>
+</html>
